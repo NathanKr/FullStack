@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Editor from "./Editor";
+import './Viewer.css';
 
 class Viewer extends Component {
   state = {
@@ -24,7 +25,7 @@ class Viewer extends Component {
     const currentElement = this.state.arP[this.state.currentIndex];
 
     return (
-      <div>
+      <div className='Viewer'>
         {elements}
         {this.state.currentIndex !== null ? (
           <Editor
