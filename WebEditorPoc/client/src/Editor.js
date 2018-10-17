@@ -20,9 +20,9 @@ function Editor(props) {
         }}
       />
       <br />
-      <i class="glyphicon glyphicon-plus" />
+      <i className="glyphicon glyphicon-plus" />
       <br />
-      <i class="glyphicon glyphicon-remove" />
+      <i className="glyphicon glyphicon-remove" />
     </div>
   );
 }

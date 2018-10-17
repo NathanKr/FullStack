@@ -1,18 +1,30 @@
 import React, { Component } from "react";
 import Editor from "./Editor";
-import './Viewer.css';
+import "./Viewer.css";
+import axios from "axios";
+import constants from "./constants";
 
 class Viewer extends Component {
   state = {
-    arP: [
-      { text: "p1", style: { fontSize: "18px" } },
-      { text: "p2", style: { fontSize: "10px" } }
-    ],
+    arP: [],
     currentIndex: null
   };
+
+  componentDidMount() {
+    const url = `${constants.url}\\${constants.getArP}`;
+    axios
+      .get(url)
+      .then(response => {
+        console.log("data from server", response.data);
+        this.setState({ arP: response.data });
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
     const elements = this.state.arP.map((it, index) => (
       <p
+        key={index} // correct when item is not removed
         style={it.style}
         onClick={() => {
           this.setState({ currentIndex: index, ...this.setState });
@@ -25,7 +37,7 @@ class Viewer extends Component {
     const currentElement = this.state.arP[this.state.currentIndex];
 
     return (
-      <div className='Viewer'>
+      <div className="Viewer">
         {elements}
         {this.state.currentIndex !== null ? (
           <Editor
