@@ -20,9 +20,23 @@ function Editor(props) {
         }}
       />
       <br />
-      <i className="glyphicon glyphicon-plus" />
+      <i
+        className="glyphicon glyphicon-plus"
+        onClick={() => {
+          props.addAfterCurrentHandler();
+        }}
+      />
+      <i
+        className="glyphicon glyphicon-remove"
+        onClick={() => {
+          props.removeCurrentHandler();
+        }}
+      />
       <br />
-      <i className="glyphicon glyphicon-remove" />
+      <button>undo</button>
+      <button>redo</button>
+      <br />
+      <i className="glyphicon glyphicon-save" />
     </div>
   );
 }

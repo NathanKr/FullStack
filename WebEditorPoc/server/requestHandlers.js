@@ -18,18 +18,19 @@ function handle_getArP(response) {
       const collectionPElements = dbObject.collection(
         constants.CollectionP_Name
       );
-      const cursor = collectionPElements.find({});
-      cursor
-        .toArray()
-        .then(arPElements => {
-          console.log(arPElements);
-          const json = JSON.stringify(arPElements);
+
+      collectionPElements
+        .findOne({})
+        .then(document => {
+          console.log(document);
+          const json = JSON.stringify(document.data);
           response.write(json);
           response.end();
         })
         .catch(err => {
           throw err;
         });
+
       db.close();
     })
     .catch(err => {
