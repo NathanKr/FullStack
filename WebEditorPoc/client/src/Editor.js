@@ -33,10 +33,34 @@ function Editor(props) {
         }}
       />
       <br />
-      <button>undo</button>
-      <button>redo</button>
+      <i
+        className="glyphicon glyphicon-arrow-up"
+        onClick={() => {
+          props.arrowUpHandler();
+        }}
+      />
+      <i
+        className="glyphicon glyphicon-arrow-down"
+        onClick={() => {
+          props.arrowDownHandler();
+        }}
+      />
       <br />
-      <i className="glyphicon glyphicon-save" />
+      {/* --- remove disabled when redux is used */}
+      <button className="btn btn-sm btn-secondary" disabled>
+        undo
+      </button>
+      {/* --- remove disabled when redux is used */}
+      <button className="btn btn-sm btn-secondary" disabled>
+        redo
+      </button>
+      <br />
+      <i
+        className="glyphicon glyphicon-cloud-upload"
+        onClick={() => {
+          props.saveToServer();
+        }}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 const http = require("http");
 const url = require("url");
-const handlers = require('./requestHandlers');
-const constants = require('./constants');
+const handlers = require("./requestHandlers");
+const constants = require("./constants");
 
 console.log(`open the browser at localhost:${constants.port}`);
 
@@ -10,15 +10,22 @@ const requestHandler = (request, response) => {
   console.log("request.url : ", request.url);
   response.setHeader("Access-Control-Allow-Origin", "*"); // --- should be done for dev only
 
-  switch (path) {
-    case "/getArP":
-    handlers.handle_getArP(response);
-      break;
+  try {
+    switch (path) {
+      case "/getArP":
+        handlers.handle_getArP(response);
+        break;
 
-    default:
-      console.log(`unexpected path : ${path}`);
+      case "/setArP":
+        handlers.handle_setArP(request, response);
+        break;
+
+      default:
+        throw `unexpected path : ${path}`;
+    }
+  } catch (error) {
+    handlers.handle_error(response, error);
   }
 };
 
 http.createServer(requestHandler).listen(constants.port);
-

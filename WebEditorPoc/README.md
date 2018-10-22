@@ -2,6 +2,7 @@
 <ul>
 <li>Proof of concept for web editor like wix , can be useful for easily creating UI for web sites</li>
 <li>This POC was GREAT for creating the design of the system</li>
+<li>i am NOT using here advanced tools like : redux , express , mongoose because i want to get a feeling of a project without it. I.e. see the need for them</li>
 </ul>
 
 <h2>Editor operations</h2>
@@ -11,9 +12,9 @@ Client side
 <li>Delete element</li>
 <li>Update element</li>
 <li>Delete element</li>
-<li>Move element - TBD (is it needed)</li>
-<li>Undo elements operations</li>
-<li>Redo elements operations</li>
+<li>Move element</li>
+<li>Undo elements operations (not implement here because i need redux for it)</li>
+<li>Redo elements operations (not implement here because i need redux for it)</li>
 </ul>
 
 Client \ Server side
@@ -29,10 +30,9 @@ Client \ Server side
 <li>client : react</li>
 <li>server : node.js </li>
 <li>data base : MongoDb</li>
-<li>state management : redux -> TBD very easy for undo redo which might be useful in GUI edit</li>
+<li>state management : state as field in component</li>
 </ol>
 
-Remark : i am _deliberately_ not using common tools like express and mongoose in this project because i want to get a feeling which headache exists 
 
 <h2>Data Base issues</h2>
 <table>
@@ -58,6 +58,7 @@ Remark : i am _deliberately_ not using common tools like express and mongoose in
 <li>con - very complicated to implement: require extra state for storing change . how do you handle move of element ?</li>
 </ul>
 </td>
+<td>I have chosen option 1 at least for this POC</td>
   </tr>
   <tr>
     <td>Element style</td>
@@ -86,9 +87,26 @@ Remark : i am _deliberately_ not using common tools like express and mongoose in
     <td>This happens when client try to access the server while both on the same machine. it is solved by removing all origin restrictions on node.js using response.setHeader("Access-Control-Allow-Origin", "*")</td>
 <td>This should be done on development server ONLY</td>
   </tr>
+<tr>
+    <td>Handling Up\Down without redux</td>
+    <td>This became a bit problematic :
+<ul>
+<li>For testing up\down with jest i was force to export MoveUp\MoveDown function or put  it on Utils class and export it. Using redux\reducer function would be easier because it is public anyway</li>
+<li>MoveUp\MoveDown are not handling state so i need another layer doing this (and they are not because i wanted it to be small. Using redux\reducer change the state by nature which make it easier to manage</li>
+</ul>
+</td>
+<td></td>
+  </tr>
 </table>
 
 <h2>To Do</h2>
 <ol>
 <li>Share constants between client and server e.g. port , ...</li>
+<li>disable up and down arrow of bootstrap icons on edit when operation is not possible e.g. up when current index is 0</li>
+
 </ol>
+
+<h2>required installation</h2>
+<ul>
+<li>npm intall axios</li>
+</ul>
