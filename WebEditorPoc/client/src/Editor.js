@@ -1,4 +1,5 @@
 import React from "react";
+import LoaderButton from './CommonUI/LoaderButton';
 
 function Editor(props) {
   return (
@@ -55,12 +56,15 @@ function Editor(props) {
         redo
       </button>
       <br />
-      <i
-        className="glyphicon glyphicon-cloud-upload"
-        onClick={() => {
+      <LoaderButton
+        texts = {props.saveTexts}
+        loadingModes = {props.saveLoadingModes}
+        loadHandler={() => {
           props.saveToServer();
         }}
-      />
+      >
+        save
+      </LoaderButton>
     </div>
   );
 }

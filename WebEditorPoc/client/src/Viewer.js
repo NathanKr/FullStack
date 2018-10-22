@@ -4,12 +4,15 @@ import "./Viewer.css";
 import axios from "axios";
 import constants from "./constants";
 import Utils from "./Utils";
+import loadingModes from "./CommonUI/LoadingModes";
 
 class Viewer extends Component {
   state = {
     arP: [],
     currentIndex: null,
-    loading: false
+    loading: false, // get
+    saveLoadingModes: loadingModes.none, // set
+    error: null
   };
 
   isDirty = false; // any crud on any element from last save
@@ -25,7 +28,7 @@ class Viewer extends Component {
       })
       .catch(err => {
         console.log(err);
-        this.setState({ ...this.state, loading: false });
+        this.setState({ ...this.state, loading: false, error: err.message });
       });
   }
 
@@ -43,28 +46,52 @@ class Viewer extends Component {
     ));
 
     const currentElement = this.state.arP[this.state.currentIndex];
+    const errorElement = this.state.error ? (
+      <h2 style={{color:'red'}}
+        onClick={() => {
+          this.setState({ ...this.state, error: null }); //click to remove
+        }}
+      >
+        {this.state.error}
+      </h2>
+    ) : (
+      ""
+    );
 
     return (
       <div className="Viewer">
+        {errorElement}
         {this.state.loading ? <h2>processing...</h2> : ""}
         {elements}
         {this.state.currentIndex !== null ? (
           <Editor
             text={currentElement.text}
             style={currentElement.style}
+            saveTexts={["Save", "Saving", "Saved"]}
+            saveLoadingModes={this.state.saveLoadingModes}
             saveToServer={() => {
               const url = `${constants.url}\\${constants.setArP}`;
-              const body = this.state.arP;
-              this.setState({ ...this.state, loading: true });
+              const body = JSON.stringify(this.state.arP);
+              this.setState({
+                ...this.state,
+                saveLoadingModes: loadingModes.loading
+              });
               axios
                 .post(url, body)
                 .then(response => {
-                  this.setState({ ...this.state, loading: false });
+                  this.setState({
+                    ...this.state,
+                    saveLoadingModes: loadingModes.finished
+                  });
                   console.log("success : ", response);
                 })
                 .catch(err => {
                   console.log("error : ", err);
-                  this.setState({ ...this.state, loading: false });
+                  this.setState({
+                    ...this.state,
+                    saveLoadingModes: loadingModes.none,
+                    error: err.message
+                  });
                 });
             }}
             addAfterCurrentHandler={() => {
@@ -75,7 +102,8 @@ class Viewer extends Component {
               this.setState({
                 ...this.state,
                 arP: new_arP,
-                currentIndex: newIndex
+                currentIndex: newIndex,
+                saveLoadingModes: loadingModes.none
               });
             }}
             removeCurrentHandler={() => {
@@ -85,7 +113,8 @@ class Viewer extends Component {
               this.setState({
                 ...this.state,
                 arP: new_arP,
-                currentIndex: null
+                currentIndex: null,
+                saveLoadingModes: loadingModes.none
               });
             }}
             arrowDownHandler={() => {
@@ -97,7 +126,8 @@ class Viewer extends Component {
               this.setState({
                 ...this.state,
                 arP: new_arP,
-                currentIndex: newCurrentIndex
+                currentIndex: newCurrentIndex,
+                saveLoadingModes: loadingModes.none
               });
             }}
             arrowUpHandler={() => {
@@ -109,18 +139,27 @@ class Viewer extends Component {
               this.setState({
                 ...this.state,
                 arP: new_arP,
-                currentIndex: newCurrentIndex
+                currentIndex: newCurrentIndex,
+                saveLoadingModes: loadingModes.none
               });
             }}
             onChangeText={text => {
               let new_arP = [...this.state.arP];
               new_arP[this.state.currentIndex].text = text;
-              this.setState({ ...this.state, arP: new_arP });
+              this.setState({
+                ...this.state,
+                arP: new_arP,
+                saveLoadingModes: loadingModes.none
+              });
             }}
             onChangeFontSize={fontSize => {
               let new_arP = [...this.state.arP];
               new_arP[this.state.currentIndex].style = { fontSize: fontSize };
-              this.setState({ arP: new_arP, ...this.state });
+              this.setState({
+                arP: new_arP,
+                ...this.state,
+                saveLoadingModes: loadingModes.none
+              });
             }}
           />
         ) : (

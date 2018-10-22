@@ -28,10 +28,11 @@ function handle_setArP(request, response) {
     })
     .on("data", chunk => {
       body.push(chunk);
+      console.log("chunk : ", chunk);
     })
     .on("end", () => {
       body = Buffer.concat(body).toString();
-      console.log("body : ",body);
+      console.log("body : ", body);
       const objBody = JSON.parse(body);
       getconnectedDb()
         .then(db => {
@@ -43,7 +44,10 @@ function handle_setArP(request, response) {
             .then(result => {
               console.log("server updated data to MongoDb");
               console.log(objBody);
-              response.end();
+              setTimeout(() => {//delay so i will see progress
+                console.log('delayed server to see client progress');
+                response.end();
+              }, 4000);
             })
             .catch(err => {
               throw err;
@@ -82,9 +86,9 @@ function handle_getArP(response) {
     });
 }
 
-function handle_error(response,error) {
+function handle_error(response, error) {
   response.writeHead(500);
-  console.log(error);
+  console.log("unexpected error : ", error);
   response.end();
 }
 

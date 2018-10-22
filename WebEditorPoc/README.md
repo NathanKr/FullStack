@@ -88,7 +88,7 @@ Client \ Server side
 <td>This should be done on development server ONLY</td>
   </tr>
 <tr>
-    <td>Handling Up\Down without redux</td>
+    <td>Handling Up\Down logic without redux</td>
     <td>This became a bit problematic :
 <ul>
 <li>For testing up\down with jest i was force to export MoveUp\MoveDown function or put  it on Utils class and export it. Using redux\reducer function would be easier because it is public anyway</li>
@@ -102,8 +102,11 @@ Client \ Server side
 <h2>To Do</h2>
 <ol>
 <li>Share constants between client and server e.g. port , ...</li>
-<li>disable up and down arrow of bootstrap icons on edit when operation is not possible e.g. up when current index is 0</li>
-
+<li>Disable up and down arrow of bootstrap icons on edit when operation is not possible e.g. up when current index is 0</li>
+<li>Why on axios doc https://www.npmjs.com/package/axios it is possible to send object to server but i was not able to (had to send json of object)</li>
+<li>Better understand LoaderButton.css</li>
+<li>Handle error with alert (one i did) on client</li>
+<li>Why parse error on server was not cached </li>
 </ol>
 
 <h2>required installation</h2>
