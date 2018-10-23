@@ -47,7 +47,8 @@ class Viewer extends Component {
 
     const currentElement = this.state.arP[this.state.currentIndex];
     const errorElement = this.state.error ? (
-      <h2 style={{color:'red'}}
+      <h2
+        style={{ color: "red" }}
         onClick={() => {
           this.setState({ ...this.state, error: null }); //click to remove
         }}
@@ -65,6 +66,7 @@ class Viewer extends Component {
         {elements}
         {this.state.currentIndex !== null ? (
           <Editor
+            currentIndex={this.state.currentIndex}
             text={currentElement.text}
             style={currentElement.style}
             saveTexts={["Save", "Saving", "Saved"]}

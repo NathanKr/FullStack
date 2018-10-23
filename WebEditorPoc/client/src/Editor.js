@@ -21,26 +21,27 @@ function Editor(props) {
         }}
       />
       <br />
-      <i
+      <button
         className="glyphicon glyphicon-plus"
         onClick={() => {
           props.addAfterCurrentHandler();
         }}
       />
-      <i
+      <button
         className="glyphicon glyphicon-remove"
         onClick={() => {
           props.removeCurrentHandler();
         }}
       />
       <br />
-      <i
+      <button
         className="glyphicon glyphicon-arrow-up"
+        disabled = {props.currentIndex === 0}
         onClick={() => {
           props.arrowUpHandler();
         }}
       />
-      <i
+      <button
         className="glyphicon glyphicon-arrow-down"
         onClick={() => {
           props.arrowDownHandler();
