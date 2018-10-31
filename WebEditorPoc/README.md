@@ -97,6 +97,11 @@ Client \ Server side
 </td>
 <td></td>
   </tr>
+<tr>
+<td>Node.js exit </td>
+<td>Node.js will exit on some type of exception (e.g. JSON.Parse) even when you use try and catch</td>
+<td>I assume that express handles this of the shelf which is attractive. Notice that JSON.Parse return promise so you can catch using it</td>
+</tr>
 </table>
 
 <h2>To Do</h2>
@@ -106,10 +111,19 @@ Client \ Server side
 <li>Why on axios doc https://www.npmjs.com/package/axios it is possible to send object to server but i was not able to (had to send json of object)</li>
 <li>Better understand LoaderButton.css</li>
 <li>Handle error with alert (one i did) on client</li>
-<li>Why parse error on server was not cached </li>
+<li>Why parse error on server was not caught by upper layer catch. need to fix this because its server !!!</li>
+<li>navigating in react-router cause component unmount so state inside it is lost and need to be fetched from server. solution may be 
+<ul>
+<li>persist it in local storage</li>
+<li>put in App level -> but when is it going to be filled ?</li>
+<li>put in redux ?</li>
+</ul>
+<li>
 </ol>
 
 <h2>required installation</h2>
+<p>Client</p>
 <ul>
 <li>npm intall axios</li>
+<li>npm intall react-router</li>
 </ul>

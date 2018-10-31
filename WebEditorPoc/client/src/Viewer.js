@@ -15,8 +15,7 @@ class Viewer extends Component {
     error: null
   };
 
-  isDirty = false; // any crud on any element from last save
-
+  
   componentDidMount() {
     const url = `${constants.url}\\${constants.getArP}`;
     this.setState({ ...this.state, loading: true });
@@ -66,9 +65,33 @@ class Viewer extends Component {
         {elements}
         {this.state.currentIndex !== null ? (
           <Editor
-            currentIndex={this.state.currentIndex}
+            // *************  page specific *************
             text={currentElement.text}
             style={currentElement.style}
+            onChangeFontSize={fontSize => {
+              let new_arP = [...this.state.arP];
+              new_arP[this.state.currentIndex].style = { fontSize: fontSize };
+              this.setState({
+                arP: new_arP,
+                ...this.state,
+                saveLoadingModes: loadingModes.none
+              });
+            }}
+            onChangeText={text => {
+              let new_arP = [...this.state.arP];
+              new_arP[this.state.currentIndex].text = text;
+              this.setState({
+                ...this.state,
+                arP: new_arP,
+                saveLoadingModes: loadingModes.none
+              });
+            }}
+
+
+            
+            // *************  common to all pages *************
+            arrayLen={this.state.arP.length}
+            currentIndex={this.state.currentIndex}
             saveTexts={["Save", "Saving", "Saved"]}
             saveLoadingModes={this.state.saveLoadingModes}
             saveToServer={() => {
@@ -142,24 +165,6 @@ class Viewer extends Component {
                 ...this.state,
                 arP: new_arP,
                 currentIndex: newCurrentIndex,
-                saveLoadingModes: loadingModes.none
-              });
-            }}
-            onChangeText={text => {
-              let new_arP = [...this.state.arP];
-              new_arP[this.state.currentIndex].text = text;
-              this.setState({
-                ...this.state,
-                arP: new_arP,
-                saveLoadingModes: loadingModes.none
-              });
-            }}
-            onChangeFontSize={fontSize => {
-              let new_arP = [...this.state.arP];
-              new_arP[this.state.currentIndex].style = { fontSize: fontSize };
-              this.setState({
-                arP: new_arP,
-                ...this.state,
                 saveLoadingModes: loadingModes.none
               });
             }}

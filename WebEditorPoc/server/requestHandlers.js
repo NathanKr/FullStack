@@ -33,6 +33,12 @@ function handle_setArP(request, response) {
     .on("end", () => {
       body = Buffer.concat(body).toString();
       console.log("body : ", body);
+      /* ---  JSON.parse may throw and cause server to stop !!!!!!
+              i was expecting try\catch of upper to handle this but this is not happen
+              i dont have good solution so currently i dont handle this . 
+              either there is solution for this in node or express handle this of the shelf
+      */
+
       const objBody = JSON.parse(body);
       getconnectedDb()
         .then(db => {
@@ -44,8 +50,11 @@ function handle_setArP(request, response) {
             .then(result => {
               console.log("server updated data to MongoDb");
               console.log(objBody);
-              setTimeout(() => {//delay so i will see progress
-                console.log('delayed server to see client progress');
+              setTimeout(() => {
+                //delay so i will see progress
+                console.log(
+                  "dev issue - delayed server to see client progress"
+                );
                 response.end();
               }, 4000);
             })

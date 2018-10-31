@@ -1,7 +1,8 @@
 import React from "react";
-import LoaderButton from './CommonUI/LoaderButton';
+import LoaderButton from "./CommonUI/LoaderButton";
 
 function Editor(props) {
+  const buttonClassName = "btn btn-sm";
   return (
     <div>
       text :{" "}
@@ -22,44 +23,49 @@ function Editor(props) {
       />
       <br />
       <button
-        className="glyphicon glyphicon-plus"
+        className={buttonClassName}
         onClick={() => {
           props.addAfterCurrentHandler();
         }}
-      />
+      >add</button>
       <button
-        className="glyphicon glyphicon-remove"
+        className={buttonClassName} disabled={props.arrayLen === 0}
         onClick={() => {
           props.removeCurrentHandler();
         }}
-      />
+      >remove</button>
       <br />
       <button
-        className="glyphicon glyphicon-arrow-up"
-        disabled = {props.currentIndex === 0}
+        className={buttonClassName}
+        disabled={props.currentIndex === 0}
         onClick={() => {
           props.arrowUpHandler();
         }}
-      />
+      >
+        up
+      </button>
       <button
-        className="glyphicon glyphicon-arrow-down"
+        className={buttonClassName}
+        disabled={props.currentIndex === props.arrayLen - 1}
         onClick={() => {
           props.arrowDownHandler();
         }}
-      />
+      >
+        down
+      </button>
       <br />
       {/* --- remove disabled when redux is used */}
-      <button className="btn btn-sm btn-secondary" disabled>
+      <button className={buttonClassName} disabled>
         undo
       </button>
       {/* --- remove disabled when redux is used */}
-      <button className="btn btn-sm btn-secondary" disabled>
+      <button className={buttonClassName} disabled>
         redo
       </button>
       <br />
       <LoaderButton
-        texts = {props.saveTexts}
-        loadingModes = {props.saveLoadingModes}
+        texts={props.saveTexts}
+        loadingModes={props.saveLoadingModes}
         loadHandler={() => {
           props.saveToServer();
         }}

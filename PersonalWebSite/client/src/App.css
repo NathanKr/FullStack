@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+  padding : 10px
+}
+
+.TopMenu a {
+  margin: 10px;
+  text-decoration: none;
+}
+
+
+.TopMenu .Left{
+  float : left;
+}
+
+.TopMenu .Right{
+  float : right;
+}
